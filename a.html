@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPI QR Code</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        /* Add your background image here */
+        body {
+            background-image: url('https://i.postimg.cc/ZRv45PWd/12.jpg'); /* Replace with your image URL */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white shadow-lg rounded-lg p-8 max-w-sm w-full text-center">
+        <!-- QR Code Image -->
+        <img src="bar.jpg" alt="QR Code" class="mb-4 mx-auto" />
+
+        <!-- UPI ID -->
+        <h2 class="text-xl font-bold text-gray-800 mb-2">UPI ID:</h2>
+        <p id="upiId" class="text-gray-600 mb-4"> shrikrishnajanmbhoomi@sbi</p>
+
+        <!-- Copy Button -->
+        <button id="copyButton" class="py-2 px-4 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition">
+            Copy UPI ID
+        </button>
+    </div>
+
+    <script>
+        document.getElementById('copyButton').addEventListener('click', function() {
+            const upiId = document.getElementById('upiId').innerText;
+
+            // Copy UPI ID to clipboard
+            navigator.clipboard.writeText(upiId).then(() => {
+                // Use SweetAlert2 to show a success message
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Copied!',
+                    text: 'UPI ID copied to clipboard!',
+                    confirmButtonText: 'Okay'
+                });
+            }).catch(err => {
+                console.error('Error copying UPI ID: ', err);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops!',
+                    text: 'Failed to copy UPI ID.',
+                    confirmButtonText: 'Try Again'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

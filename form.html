@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>donationForm</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    /* Ensure the background covers the whole page */
+    body {
+      background-image: url('https://i.postimg.cc/ZRv45PWd/12.jpg'); /* Replace with your image URL */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+    <section class="flex items-center justify-center min-h-screen">
+      <div class="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
+        
+        <!-- Form Header -->
+        <h2 class="text-orange-600 text-2xl font-bold text-center mb-2">दान करें</h2>
+        <p class="text-center text-gray-600 mb-6">सक्रिय सदस्यता के लिए दान करने के लिए</p>
+        
+        <!-- Donation Form -->
+        <form id="donationForm" onsubmit="PostData(event)">
+          <!-- Title (उपाधी) -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">उपाधी*</label>
+            <select id="title" class="w-full mt-1 p-2 border border-gray-300 rounded-md" required>
+              <option value="">Select</option>
+              <option>श्री</option>
+              <option>श्रीमती</option>
+              <option>कुमारी</option>
+            </select>
+          </div>
+          
+          <!-- Name (नाम) -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">नाम*</label>
+            <input type="text" id="fName" placeholder="अपना नाम दर्ज करें" class="w-full p-2 border border-gray-300 rounded-md" required>
+          </div>
+          
+          <!-- Mobile Number (मोबाइल नंबर) -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">मोबाइल नंबर*</label>
+            <input type="tel" id="mobile" placeholder="+91" class="w-full p-2 border border-gray-300 rounded-md" required>
+            <small class="text-gray-500 block mt-1">कृपया नंबर सत्यापित करें</small>
+          </div>
+          
+          <!-- Email (ईमेल आईडी) -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">ईमेल आईडी</label>
+            <input type="email" id="email" placeholder="example@gmail.com" class="w-full p-2 border border-gray-300 rounded-md">
+          </div>
+          
+          <!-- Donation Amount (दान राशि) -->
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">दान राशि*</label>
+            <input type="number" id="amount" placeholder="राशि दर्ज करें" class="w-full p-2 border border-gray-300 rounded-md" required>
+          </div>
+          
+          <!-- Agreement Checkbox -->
+          <div class="mb-4 flex items-start">
+            <input type="checkbox" id="agreement" class="mt-1 h-4 w-4 text-orange-600 border-gray-300 rounded" required>
+            <label class="ml-2 block text-sm text-gray-700">
+              मैं प्रमाणित करता हूँ कि उपरोक्त जानकारी सही है और कोई विसंगति नहीं है।
+            </label>
+          </div>
+          
+          <!-- Submit Button -->
+          <button type="submit" class="w-full py-2 px-4 bg-orange-600 text-white font-semibold rounded-md hover:bg-orange-700 transition">
+            दान करें
+          </button>
+        </form>
+      </div>
+    </section>
+    <script>
+        async function PostData(event) {
+            event.preventDefault();
+    
+            // Get values from the form
+            const fName = document.getElementById('fName').value;
+            const lName = document.getElementById('title').value; // Assuming title is last name for this example
+            const email = document.getElementById('email').value;
+            const amount = document.getElementById('amount').value;
+            const mobile = document.getElementById('mobile').value; // Get mobile number
+    
+            // Prepare data to send to Firebase
+            const data = {
+                fName,
+                lName,
+                email,
+                amount,
+                mobile // Include mobile number in the data object
+            };
+    
+            const response = await fetch("https://techmen-17a20-default-rtdb.firebaseio.com/saurabh/-O9coHbH2AUlYIFUQYW5/saurabhform.json", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+    
+            if (response.ok) {
+                // Use SweetAlert2 to show a success message
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'सफलता!',
+                    text: 'दान विवरण सफलतापूर्वक सबमिट किया गया!',
+                    confirmButtonText: 'ठीक है'
+                });
+                // Redirect to another page after clicking 'OK'
+                window.location.href = 'a.html'; // Replace with the URL of your next page
+            }
+        }
+    </script>
+    
+  
+  
+  
+</body>
+</html>
